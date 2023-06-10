@@ -60,6 +60,10 @@ mac_os_setup() {
 
   echo "Install Oh My Zsh ..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+  echo "Installing Oh My Zsh Theme Powerlevel10k .."
+  brew install romkatv/powerlevel10k/powerlevel10k
+  echo "source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme" >> ~/.zshrc
 }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
