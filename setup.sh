@@ -57,6 +57,9 @@ mac_os_setup() {
 
   echo "Installing Oracle Java 17.0.5 ..."
   sdk install java 17.0.5-oracle
+
+  echo "Install Oh My Zsh ..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
