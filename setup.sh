@@ -36,6 +36,9 @@ mac_os_setup() {
 
   echo "Installing Notion ..."
   brew install --cask notion
+  
+  echo "Installing iTerm2 ..."
+  brew install --cask iterm2
 
   echo "Installing nvm ..."
   brew install nvm
