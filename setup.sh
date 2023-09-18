@@ -40,6 +40,9 @@ mac_os_setup() {
   echo "Installing iTerm2 ..."
   brew install --cask iterm2
 
+  echo "Installing Rectangle ..."
+  brew install --cask rectangle
+
   echo "Installing nvm ..."
   brew install nvm
   mkdir ~/.nvm
