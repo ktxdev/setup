@@ -48,15 +48,14 @@ mac_os_setup() {
   mkdir ~/.nvm
   echo 'export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion' >>/Users/$USER/.bash_profile
-  source /Users/$USER/.bash_profile
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion' >>/Users/$USER/.zshrc
 
   echo "Installing Node Latest LTS Version ..."
   nvm install --lts
 
   echo "Installing SDKMAN ..."
   curl -s "https://get.sdkman.io" | bash
-  source "/Users/$USER/.sdkman/bin/sdkman-init.sh"
+  echo 'export SDKMAN_DIR="$HOME/.sdkman" [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"' >> /Users/$USER/.zshrc
 
   echo "Installing Oracle Java 17.0.5 ..."
   sdk install java 17.0.5-oracle
