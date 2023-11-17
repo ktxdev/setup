@@ -1,5 +1,8 @@
+BLUE='\033[0;34m'
+NC='\033[0m'
+
 mac_os_setup() {
-  echo "Installing HomeBrew ..."
+  printf "${BLUE}Installing HomeBrew ..."
   sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   (
     echo
@@ -7,63 +10,66 @@ mac_os_setup() {
   ) >>/Users/$USER/.zprofile
   eval "$(/opt/homebrew/bin/brew shellenv)"
 
-  echo "Installing Git ..."
+  printf "${BLUE}Installing Git ..."
   brew install git
 
-  echo "Installing Intellij Idea ..."
+  printf "${BLUE}Installing Intellij Idea ..."
   brew install --cask intellij-idea
 
-  echo "Installing Android Studio ..."
+  printf "${BLUE}Installing Android Studio ..."
   brew install --cask android-studio
 
-  echo "Installing Visual Studio Code ..."
+  printf "${BLUE}Installing Visual Studio Code ..."
   brew install --cask visual-studio-code
 
-  echo "Installing Brave Browser ..."
+  printf "${BLUE}Installing Brave Browser ..."
   brew install --cask brave-browser
 
-  echo "Installing Postman ..."
+  printf "${BLUE}Installing Postman ..."
   brew install --cask postman
 
-  echo "Installing Slack ..."
+  printf "${BLUE}Installing Slack ..."
   brew install --cask slack
 
-  echo "Installing Spotify ..."
+  printf "${BLUE}Installing Spotify ..."
   brew install --cask spotify
 
-  echo "Installing Bitwarden ..."
+  printf "${BLUE}Installing Bitwarden ..."
   brew install --cask bitwarden
 
-  echo "Installing Notion ..."
+  printf "${BLUE}Installing Notion ..."
   brew install --cask notion
   
-  echo "Installing iTerm2 ..."
+  printf "${BLUE}Installing iTerm2 ..."
   brew install --cask iterm2
 
-  echo "Installing Rectangle ..."
+  printf "${BLUE}Installing Rectangle ..."
   brew install --cask rectangle
 
-  echo "Installing nvm ..."
+  printf "${BLUE}Installing Docker ..."
+  brew install docker
+
+  printf "${BLUE}Installing nvm ..."
   brew install nvm
   mkdir ~/.nvm
   echo 'export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion' >>/Users/$USER/.zshrc
 
-  echo "Installing Node Latest LTS Version ..."
+  printf "${BLUE}Installing Node Latest LTS Version ..."
   nvm install --lts
 
-  echo "Installing SDKMAN ..."
+  printf "${BLUE}Installing SDKMAN ..."
   curl -s "https://get.sdkman.io" | bash
   echo 'export SDKMAN_DIR="$HOME/.sdkman" [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"' >> /Users/$USER/.zshrc
 
-  echo "Installing Oracle Java 17.0.5 ..."
+  printf "${BLUE}Installing Oracle Java 17.0.5 ..."
   sdk install java 17.0.5-oracle
 
-  echo "Install Oh My Zsh ..."
+  printf "${BLUE}Install Oh My Zsh ..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-  echo "Installing Oh My Zsh Theme Powerlevel10k .."
+  printf "${BLUE}Installing Oh My Zsh Theme Powerlevel10k .."
   brew install romkatv/powerlevel10k/powerlevel10k
   echo "source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme" >> ~/.zshrc
 }
