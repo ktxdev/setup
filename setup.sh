@@ -3,7 +3,7 @@ NC='\033[0m'
 
 mac_os_setup() {
   printf "${BLUE}Installing HomeBrew ..."
-  sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   (
     echo
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"'
