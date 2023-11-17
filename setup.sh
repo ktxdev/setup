@@ -7,11 +7,14 @@ mac_os_setup() {
   ) >>/Users/$USER/.zprofile
   eval "$(/opt/homebrew/bin/brew shellenv)"
 
-  echo "Installing git ..."
+  echo "Installing Git ..."
   brew install git
 
-  echo "Installing jetbrains toolbox ..."
-  brew install --cask jetbrains-toolbox
+  echo "Installing Intellij Idea ..."
+  brew install --cask intellij-idea
+
+  echo "Installing Android Studio ..."
+  brew install --cask android-studio
 
   echo "Installing Visual Studio Code ..."
   brew install --cask visual-studio-code
@@ -24,9 +27,6 @@ mac_os_setup() {
 
   echo "Installing Slack ..."
   brew install --cask slack
-
-  echo "Installing Skype ..."
-  brew install --cask skype
 
   echo "Installing Spotify ..."
   brew install --cask spotify
