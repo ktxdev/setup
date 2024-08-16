@@ -55,9 +55,21 @@ mac_os_setup() {
   printf "${BLUE}Install Oh My Zsh ..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-  printf "${BLUE}Installing Oh My Zsh Theme Powerlevel10k .."
+  printf "${BLUE}Installing Oh My Zsh Theme Powerlevel10k ..."
   brew install powerlevel10k
   echo "source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
+
+  printf "${BLUE} Installing miniconda ..."
+  brew install --cask miniconda
+  conda init "$(basename "${SHELL}")"
+
+  printf "${BLUE} Creating an ml_env with python=3.10..."
+  conda create --name ml_env python=3.10
+  printf "${BLUE} Activating ml_env ..."
+  conda activate ml_env
+  printf "${BLUE} Installing jupyter in ml_env ..."
+  conda install jupyter
+  
 }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
