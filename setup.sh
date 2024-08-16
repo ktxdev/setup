@@ -14,8 +14,8 @@ mac_os_setup() {
   git config --global user.name "Sean Huvaya"
   git config --global user.email "sean.ktxdev@gmail.com"
 
-  # printf "${BLUE}Installing Brave Browser ..."
-  # brew install --cask brave-browser
+  printf "${BLUE}Installing Brave Browser ..."
+  brew install --cask brave-browser
 
   printf "${BLUE}Installing Visual Studio Code ..."
   brew install --cask visual-studio-code
