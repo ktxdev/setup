@@ -65,11 +65,22 @@ mac_os_setup() {
 
   printf "${BLUE} Creating an ml_env with python=3.10..."
   conda create --name ml_env python=3.10
+  
   printf "${BLUE} Activating ml_env ..."
   conda activate ml_env
+
   printf "${BLUE} Installing jupyter in ml_env ..."
   conda install jupyter
   
+  printf "${BLUE} Installing wget ..."
+  brew install wget
+
+  printf "${BLUE} Installing Docker ..."
+  wget https://desktop.docker.com/mac/main/arm64/Docker.dmg
+  sudo hdiutil attach Docker.dmg
+  sudo /Volumes/Docker/Docker.app/Contents/MacOS/install
+  sudo hdiutil detach /Volumes/Docker
+  rm Docker.dmg
 }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
