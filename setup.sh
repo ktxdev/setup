@@ -56,3 +56,13 @@ conda init "$(basename "${SHELL}")"
 
 printf "${BLUE} Installing drawio ..."
 brew install --cask drawio
+
+printf "${BLUE} Installing wget ..."
+brew install wget
+
+printf "${BLUE} Installing Docker ..."
+wget https://desktop.docker.com/mac/main/arm64/Docker.dmg
+sudo hdiutil attach Docker.dmg
+sudo /Volumes/Docker/Docker.app/Contents/MacOS/install
+sudo hdiutil detach /Volumes/Docker
+rm Docker.dmg
