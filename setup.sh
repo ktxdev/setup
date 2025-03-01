@@ -53,3 +53,6 @@ nvm install --lts
 printf "${BLUE} Installing miniconda ..."
 brew install --cask miniconda
 conda init "$(basename "${SHELL}")"
+
+printf "${BLUE} Installing drawio ..."
+brew install --cask drawio
