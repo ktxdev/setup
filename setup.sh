@@ -57,6 +57,9 @@ conda init "$(basename "${SHELL}")"
 printf "${BLUE} Installing drawio ..."
 brew install --cask drawio
 
+printf "${BLUE} Installing postman ..."
+brew install --cask postman
+
 printf "${BLUE} Installing wget ..."
 brew install wget
 
