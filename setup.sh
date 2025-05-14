@@ -1,71 +1,109 @@
-BLUE='\033[0;34m'
-NC='\033[0m'
+#!/bin/bash
 
-printf "${BLUE}Installing HomeBrew ..."
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/ktxdev/.zprofile
+# Constants
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NO_COLOR='\033[0m'
+
+# Get username
+USERNAME=$1
+GITHUB_NAME=$2
+GITHUB_EMAIL=$3
+
+if [ -z "$USERNAME" ]; then
+        echo "Error: No user specified."
+        exit 1
+fi
+
+ZPROFILE_PATH="/Users/$USERNAME/.zprofile"
+
+echo -e "${GREEN}Installing brew...${NO_COLOR}"
+yes '' | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo >> "$ZPROFILE_PATH"
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$ZPROFILE_PATH"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-printf "${BLUE}Install Oh My Zsh ..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+APPLICATIONS=(
+        "brave-browser"
+        "git"
+        "rectangle"
+        "spotify"
+        "notion"
+        "cursor"
+        "intellij-idea"
+        "nvm"
+        "postman"
+        "miniconda"
+        "item2"
+)
 
-printf "${BLUE}Installing Oh My Zsh Theme Powerlevel10k ..."
-brew install powerlevel10k
-echo "source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" >> ~/.zshrc
+# Install and track the apps installed
+installed_apps=()
 
-printf "${BLUE}Installing Git ..."
-brew install git
+for app in "${APPLICATIONS[@]}"; do
+        echo -e "${GREEN}Installing $app...${NO_COLOR}"
+        brew install "$app"
+        if [ $? -eq 0 ]; then
+                ininstalled_apps+=("$app")
+        else
+                echo -e "${RED}Failed to install $app.${NO_COLOR}"
+        fi
+done
 
-printf "${BLUE}Setting Git global configs ..."
-git config --global user.name "Sean Huvaya"
-git config --global user.email "sean.ktxdev@gmail.com"
+# Create NVM's working directory if it doesn't exit
+if [ ! -d "$HOME/.nvm" ]; then
+        echo -e "${GREEN}Creating NVM directory...${NO_COLOR}"
+        mkdir "$HOME/.nvm"
+fi
 
-printf "${BLUE}Installing Brave Browser ..."
-brew install --cask brave-browser
+# Add the NVM setup to the profile
+echo -e "${GREEN}Configuring NVM in $ZPROFILE_PATH...${NO_COLOR}"
+{
+        echo 'export NVM_DIR="$HOME/.nvm"'
+        echo '[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm'
+        echo '[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion'
+} >> "$ZPROFILE_PATH"
 
-printf "${BLUE}Installing Visual Studio Code ..."
-brew install --cask visual-studio-code
+echo -e "${GREEN}Reloading shell profile...${NO_COLOR}"
+source "$ZPROFILE_PATH"
 
-printf "${BLUE}Installing Spotify ..."
-brew install --cask spotify
-
-printf "${BLUE}Installing Notion ..."
-brew install --cask notion
-
-printf "${BLUE}Installing iTerm2 ..."
-brew install --cask iterm2
-
-printf "${BLUE}Installing Rectangle ..."
-brew install --cask rectangle
-
-printf "${BLUE}Installing PyCharm ..."
-brew install --cask pycharm
-
-printf "${BLUE}Installing nvm ..."
-brew install nvm
-mkdir ~/.nvm
-echo -e '\n# nvm\nexport NVM_DIR="$HOME/.nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"\n[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.zshrc
-source ~/.zshrc
-
-printf "${BLUE}Installing Node Latest LTS Version ..."
+# Install latest Node version
+echo -e "${GREEN}Installing Node Latest LTS Version...${NO_COLOR}"
 nvm install --lts
 
-printf "${BLUE} Installing miniconda ..."
-brew install --cask miniconda
+# Initialize miniconda
+echo -e "${GREEN}Initializing miniconda...${NO_COLOR}"
 conda init "$(basename "${SHELL}")"
 
-printf "${BLUE} Installing drawio ..."
-brew install --cask drawio
+if [ -z "$GITHUB_NAME" ]; then
+        echo -e "${GREEN}Setting git global user.name...${NO_COLOR}"
+        git config --global user.name "$GITHUB_NAME"
+fi
 
-printf "${BLUE} Installing postman ..."
-brew install --cask postman
+if [ -z "$GITHUB_EMAIL" ]; then
+        echo -e "${GREEN}Setting git global user.email...${NO_COLOR}"
+        git config --global user.email "$GITHUB_EMAIL"
+fi      
 
-printf "${BLUE} Installing wget ..."
-brew install wget
+echo -e "${GREEN}Reloading shell profile...${NO_COLOR}"
+source "$ZPROFILE_PATH"
+        
+echo -e "${GREEN}Cleaning up brew old versions...${NO_COLOR}"
+brew cleanup
 
-printf "${BLUE} Installing Docker ..."
-wget https://desktop.docker.com/mac/main/arm64/Docker.dmg
+echo -e "${GREEN}Installing Docker...${NO_COLOR}"
+curl -Lo Docker.dmg https://desktop.docker.com/mac/main/arm64/Docker.dmg
 sudo hdiutil attach Docker.dmg
 sudo /Volumes/Docker/Docker.app/Contents/MacOS/install
 sudo hdiutil detach /Volumes/Docker
 rm Docker.dmg
+
+if [ ${#installed_apps[@]} -gt 0 ]; then
+    echo -e "${GREEN}The following apps have been successfully installed:${NO_COLOR}"
+    for app in "${installed_apps[@]}"; do
+        echo -e "${GREEN}- $app${NO_COLOR}"
+    done
+else
+    echo -e "${RED}No apps were successfully installed.${NO_COLOR}"
+fi
+        
