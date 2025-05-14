@@ -6,16 +6,17 @@ RED='\033[0;31m'
 NO_COLOR='\033[0m'
 
 # Get username
-USERNAME=$1
-GITHUB_NAME=$2
-GITHUB_EMAIL=$3
+# Ask for the user's name
+read -p "Please enter your the system name: " username
+read -p "Please enter your the github name: " github_name
+read -p "Please enter your the github email: " github_email
 
-if [ -z "$USERNAME" ]; then
+if [ -z "$username" ]; then
         echo "Error: No user specified."
         exit 1
 fi
 
-ZPROFILE_PATH="/Users/$USERNAME/.zprofile"
+ZPROFILE_PATH="/Users/$username/.zprofile"
 
 echo -e "${GREEN}Installing brew...${NO_COLOR}"
 yes '' | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -75,14 +76,14 @@ nvm install --lts
 echo -e "${GREEN}Initializing miniconda...${NO_COLOR}"
 conda init "$(basename "${SHELL}")"
 
-if [ -z "$GITHUB_NAME" ]; then
+if [ -z "$github_name" ]; then
         echo -e "${GREEN}Setting git global user.name...${NO_COLOR}"
-        git config --global user.name "$GITHUB_NAME"
+        git config --global user.name "$github_name"
 fi
 
-if [ -z "$GITHUB_EMAIL" ]; then
+if [ -z "$github_email" ]; then
         echo -e "${GREEN}Setting git global user.email...${NO_COLOR}"
-        git config --global user.email "$GITHUB_EMAIL"
+        git config --global user.email "$github_email"
 fi      
 
 echo -e "${GREEN}Reloading shell profile...${NO_COLOR}"
