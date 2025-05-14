@@ -5,11 +5,25 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NO_COLOR='\033[0m'
 
-# Get username
-# Ask for the user's name
-read -p "Please enter your the system name: " username
-read -p "Please enter your the github name: " github_name
-read -p "Please enter your the github email: " github_email
+# Force the script to run interactively
+if [[ -t 0 ]]; then
+  # Ask for the system name (ensure this is asked interactively)
+  read -p "Please enter your system name: " username
+
+  # Ask for the GitHub username
+  read -p "Please enter your GitHub username: " github_name
+
+  # Ask for the GitHub email
+  read -p "Please enter your GitHub email: " github_email
+else
+  echo -e "${RED}The script is running non-interactively. Please run this script directly in a terminal for full interaction.${NO_COLOR}"
+  exit 1
+fi
+
+# Print the collected values
+echo "System Name: $username"
+echo "GitHub Username: $github_name"
+echo "GitHub Email: $github_email"
 
 if [ -z "$username" ]; then
         echo "Error: No user specified."
