@@ -1,7 +1,8 @@
 # Setup
-Run this command to start setup
+Run these commands to start setup
 ``` bash
- curl https://raw.githubusercontent.com/ktxdev/setup/main/setup.sh | bash
- ```
+curl -fsSL https://raw.githubusercontent.com/ktxdev/setup/main/setup.sh -o setup.sh
+chmod +x setup.sh
+./setup.sh
 
-After setup is run close and re-open the terminal to configure powerlevel10K theme
+ ```
